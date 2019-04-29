@@ -1,37 +1,96 @@
-## Welcome to GitHub Pages
+# Vue Search System
 
-You can use the [editor on GitHub](https://github.com/Lavrend/Vue-Search-System/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+Vue Search System - это поисковая система по репозиториям Github
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+* SPA структура
+* Адаптировность, основные размеры экранара (Desktop, Table, Mobile)
+* Кроссбраузерность (для IE >= 10)
+* Демонстрация возможностей связки Vue.js + Vuex
 
-### Markdown
+## Стэк технологий
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+* [Vue.js](https://ru.vuejs.org/)
+* [Vuex](https://vuex.vuejs.org/ru/)
+* [Vue Router](https://router.vuejs.org/ru/)
+* [Vue CLI v3.x](https://cli.vuejs.org/ru/)
+* [Webpack](https://webpack.js.org/) - работает под капотом Vue CLI (+ кастомный конфиг vue.config.js)
 
-```markdown
-Syntax highlighted code block
+а также:
 
-# Header 1
-## Header 2
-### Header 3
+* Pug
+* SASS/SCSS
+* БЭМ
+* [Code-style (Airbnb)](https://github.com/Lavrend/javascript-airbnb)
 
-- Bulleted
-- List
+## Основная структура проекта
+```
+vue-search-system
+└── dist/
+└── public/
+└── src/
+    └── assets/
+    └── components/
+    └── config/
+    └── layouts/
+    └── pages/
+    └── store/
+    └── styles/
+    └── utils/
+    |
+    └── App.vue
+    └── main.js
+    └── router.js
 
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+└── package.json
+└── vue.config.js
+└── README.md
+└── ...
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+* assets/ - основные ассеты приложения (шрифты, картинки, иконки, и т.д.)
+* components/ - основные компоненты приложения
+* config/ - конфиги
+* layouts/ - компоненты отображения, макеты (layouts)
+* pages/ - компоненты страниц (Home, About, etc.)
+* store/ - компоненты хранилища, глобальное состояние (Vuex Store)
+* styles/ - глобальные стили (миксины, variables, transitions, etc.)
+* utils/ - вспомогательные скрипты и утилиты (Хэлперы)
+* App.vue - основной компонент приложения
+* main.js - точка входа
+* router.js - маршрутизация приложения
 
-### Jekyll Themes
+## Установка
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/Lavrend/Vue-Search-System/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+Для работы необходим [Node.js](https://nodejs.org/) и менеджер пакетов ([npm](https://www.npmjs.com/) или [yarn](https://yarnpkg.com/))
 
-### Support or Contact
+* Node.js - v10.14.2
+* yarn - v1.15.2
 
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+### 1. Установить зависимости
+
+```sh
+cd vue-gallery
+yarn install
+```
+
+### 2. Собрать локально, запустить дев сервер
+
+```sh
+yarn dev
+```
+
+## Боевая сборка
+
+В последствии сборка и деплой будет автоматизирована, но пока что все скрипты запускаются независимо
+
+### Собрать и минифицировать билд
+```
+yarn build
+```
+
+### Запустить eslint
+```
+yarn lint
+```
+
+## TODO
