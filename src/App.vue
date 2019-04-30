@@ -15,12 +15,14 @@
 import { mapState } from 'vuex';
 
 // Layouts
+import LayoutHome from '@/layouts/Home';
 import LayoutDefault from '@/layouts/Default';
 
 export default {
   name: 'App',
 
   components: {
+    LayoutHome,
     LayoutDefault,
   },
 
@@ -30,6 +32,12 @@ export default {
     ]),
 
     getLayout() {
+      const metaLayout = this.$route.meta.layout;
+
+      if (metaLayout === 'home') {
+        return 'LayoutHome';
+      }
+
       return 'LayoutDefault';
     },
   },
@@ -51,6 +59,8 @@ export default {
   height: 100%;
   font-family: $mainFont;
   overflow: hidden;
+
+  user-select: none;
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

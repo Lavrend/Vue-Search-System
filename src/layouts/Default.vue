@@ -24,19 +24,26 @@ export default {
   position: relative;
   width: 100%;
   height: 100%;
-  background: $blue-1;
+  background: url('~@/assets/images/computer.jpg'), url($bgDefaultpageBase64);
+  background-size: cover;
+  background-position: center;
 
   display: flex;
   flex-flow: column nowrap;
 
   overflow: hidden;
 
+  &__header {
+    background: $blue-5;
+  }
+
   &__content {
     width: 100%;
     height: calc(100vh - #{$headerHeight});
     min-width: $screenMinWidth;
+    background-color: rgba($white, 0.7);
 
-    overflow-y: auto;
+    overflow: hidden;
   }
 }
 </style>

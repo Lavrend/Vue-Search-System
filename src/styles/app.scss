@@ -3,6 +3,9 @@
 @import "transitions";
 @import "fonts";
 
+// Modules
+@import "./modules/glitch";
+
 .primary-text {
-  color: $green-2;
+  color: $blue-3;
 }

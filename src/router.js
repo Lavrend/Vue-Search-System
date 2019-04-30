@@ -14,7 +14,16 @@ export default new VueRouter({
     {
       path: '/',
       name: 'home',
+      meta: {
+        layout: 'home',
+      },
       component: Home,
+    },
+
+    {
+      path: '/search',
+      name: 'search',
+      component: () => import(/* webpackChunkName: 'search' */ '@/pages/Search.vue'),
     },
 
     {
