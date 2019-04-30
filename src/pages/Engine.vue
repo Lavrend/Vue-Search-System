@@ -59,5 +59,10 @@ export default {
   &__pagination-panel {
     height: 50px;
   }
+
+  &__spinner {
+    width: 50px;
+    height: 50px;
+  }
 }
 </style>
