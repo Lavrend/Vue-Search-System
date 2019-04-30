@@ -1,5 +1,7 @@
 export default {
   DEBUG: process.env.NODE_ENV !== 'production',
+  API_HOST: 'https://api.github.com',
+  DEFAULT_PAGE_SIZE: 10,
 
   navMenu: [
     {
@@ -8,8 +10,8 @@ export default {
     },
 
     {
-      title: 'Search',
-      link: '/search',
+      title: 'Engine',
+      link: '/engine',
     },
 
     {

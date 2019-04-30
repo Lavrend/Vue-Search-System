@@ -18,8 +18,8 @@
 
         transition(name="transition-scale")
           .page-home__buttons.notranslate(v-show="isReady")
-            .page-home__btn.page-home__btn--search(@click="$router.push({ name: 'search' })")
-              | Search
+            .page-home__btn.page-home__btn--search(@click="$router.push({ name: 'engine' })")
+              | Engine
             .page-home__btn.page-home__btn--about(@click="$router.push({ name: 'about' })")
               | About
 </template>
