@@ -1,5 +1,5 @@
 /**
- * Mutations for the Engine module
+ * Mutations for the Search module
  */
 
 import types from './types';

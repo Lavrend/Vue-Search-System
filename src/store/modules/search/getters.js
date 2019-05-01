@@ -1,5 +1,5 @@
 /**
- * Getters for the Engine module
+ * Getters for the Search module
  */
 
 export default {

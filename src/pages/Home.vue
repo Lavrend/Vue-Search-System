@@ -11,15 +11,15 @@
           | SEARCH SYSTEM
         transition(name="transition-scale")
           p.page-home__description(v-show="isReady")
-            | Search Engine of <span class='primary-text'>GitHub</span> repositories
+            | Engine of search <span class='primary-text'>GitHub</span> repositories
         transition(name="transition-scale")
           p.page-home__label(v-show="isReady")
             | This application was created <br/>to <span class='primary-text'>demonstrate</span> the capabilities of <span class='primary-text'>Vue.js</span>
 
         transition(name="transition-scale")
           .page-home__buttons.notranslate(v-show="isReady")
-            .page-home__btn.page-home__btn--search(@click="$router.push({ name: 'engine' })")
-              | Engine
+            .page-home__btn.page-home__btn--search(@click="$router.push({ name: 'search' })")
+              | Search
             .page-home__btn.page-home__btn--about(@click="$router.push({ name: 'about' })")
               | About
 </template>

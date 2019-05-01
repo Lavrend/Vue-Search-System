@@ -1,12 +1,13 @@
 <template lang="pug">
-  section.page-engine
-    .page-engine__content
-      h1.page-engine__title
-        | Search
-      SearchPanel.page-engine__search
+  section.page-search
+    .page-search__header
+      SearchPanel.page-search__search
 
-      .page-engine__pagination-panel
-        uiPagination.page-engine__pagination(:total="itemsLength")
+    .page-search__content
+      h1.page-search__title
+        | Search
+      .page-search__pagination-panel
+        uiPagination.page-search__pagination(:total="itemsLength")
 
       ul.list
         li.list-item(v-for="item in items")
@@ -19,7 +20,7 @@ import SearchPanel from '@/components/SearchPanel';
 import uiPagination from '@/ui/Pagination';
 
 export default {
-  name: 'page-engine',
+  name: 'page-search',
 
   components: {
     SearchPanel,
@@ -28,11 +29,11 @@ export default {
 
   // TODO add ListComponent
   computed: {
-    ...mapState('engine', [
+    ...mapState('search', [
       'items',
     ]),
 
-    ...mapGetters('engine', [
+    ...mapGetters('search', [
       'itemsLength',
     ]),
   },
@@ -40,10 +41,18 @@ export default {
 </script>
 
 <style lang="scss">
-.page-engine {
+.page-search {
   position: relative;
   height: 100%;
   text-align: center;
+
+  &__header {
+    width: 100%;
+    height: $headerHeight;
+    padding: 0 $indent-lg;
+    background: $grey-1;
+    border-bottom: 1px solid $grey-3;
+  }
 
   &__content {
     height: 100%;

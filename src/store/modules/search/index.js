@@ -1,5 +1,5 @@
 /**
- * Catalog Engine Module
+ * Catalog Search Module
  */
 
 import state from './state';
@@ -8,7 +8,7 @@ import actions from './actions';
 import mutations from './mutations';
 
 export default {
-  name: 'engine',
+  name: 'search',
   namespaced: true,
   actions,
   getters,

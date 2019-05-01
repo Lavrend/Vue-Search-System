@@ -1,56 +1,90 @@
 <template lang="pug">
-  .catalog-search
-    Input.catalog-search__input(
+  .search-panel
+    uiInput.search-panel__input(
       v-model="currentInputValue"
-      :placeholder="placeholder"
+      :placeholder="getPlaceholderText"
       :value="currentInputValue"
-      size="34"
+      ref="searchInput"
       type="search"
-      @submit="onChangeSearch"
+      @submit="onSubmit"
     )
+    uiButton.search-panel__btn-send(
+      color="info"
+      :isLoading="isLoading"
+      :isLocked="hasFormLocked"
+      @click="onSubmit"
+    ) Send
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import config from '@/config';
 
-import Input from '@/ui/Input';
+import uiInput from '@/ui/Input';
+import uiButton from '@/ui/Button';
 
 export default {
-  name: 'catalog-search',
+  name: 'search-panel',
 
   components: {
-    Input,
+    uiInput,
+    uiButton,
   },
 
   data() {
     return {
-      placeholder: 'Type here to search (min 2 chars)',
       inputValue: '',
+
+      isLoading: false,
+      isLocked: false,
     };
   },
 
   computed: {
-    ...mapState('engine', [
-      'search',
-    ]),
+    getPlaceholderText() {
+      return `Query (min ${config.MIN_QUERY_SIZE})`;
+    },
 
     currentInputValue: {
       get() {
-        return this.search || this.inputValue;
+        return this.inputValue;
       },
 
       set(value) {
-        this.inputValue = value;
+        this.inputValue = String(value || '').trim();
       },
+    },
+
+    hasFormLocked() {
+      return this.isLocked || this.currentInputValue.length < config.MIN_QUERY_SIZE;
     },
   },
 
-  methods: {
-    onChangeSearch() {
-      const search = String(this.currentInputValue || '').trim();
+  created() {
+    this.$nextTick(() => {
+      this.inputFocusActive(true);
+    });
+  },
 
-      this.$store.dispatch('engine/setItems', {
-        search,
+  methods: {
+    inputFocusActive(active) {
+      if (active) {
+        this.$refs.searchInput.$el.focus();
+        return;
+      }
+
+      this.$refs.searchInput.$el.blur();
+    },
+
+    onSubmit() {
+      if (this.hasFormLocked) return;
+      this.isLoading = true;
+
+      this.$store.dispatch('search/setItems', {
+        query: this.currentInputValue,
+      }).finally(() => {
+        this.isLoading = false;
+        this.currentInputValue = '';
+        this.inputFocusActive(false);
       });
     },
   },
@@ -58,18 +92,24 @@ export default {
 </script>
 
 <style lang="scss">
-.catalog-search {
+.search-panel {
   width: 100%;
+  height: 100%;
+  max-width: $searchListMaxWidth;
+  margin: 0 auto;
 
-  &__label {
-    margin-right: $indent-md;
-    color: $grey-7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__input {
+    flex: 1;
   }
 
-  @media screen and (max-width: 480px) {
-    &__label {
-      display: none;
-    }
+  &__btn-send {
+    width: 100px;
+    margin-left: $indent-md;
+    font-size: 15px;
   }
 }
 </style>

@@ -1,5 +1,5 @@
 /**
- * Mutation types for the Engine module
+ * Mutation types for the Search module
  */
 
 const SET_ITEMS = 'SET_ITEMS';

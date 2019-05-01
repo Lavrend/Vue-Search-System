@@ -34,7 +34,7 @@ export default {
 
 <style lang="scss">
 .ui-spinner {
-  opacity: 0.5;
+  opacity: 0.7;
 
   display: flex;
   align-items: center;
@@ -46,8 +46,8 @@ export default {
     width: 100%;
     height: 100%;
     animation: spinner .7s linear infinite;
-    border: 5px solid rgba($white, .5);
-    border-top-color: $dark;
+    border: 3px solid rgba($white, .5);
+    border-top-color: $white;
     border-radius: 100%;
   }
 

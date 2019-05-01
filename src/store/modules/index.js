@@ -1,8 +1,8 @@
 // All store modules
 import app from './app';
-import engine from './engine';
+import search from './search';
 
 export default {
   app,
-  engine,
+  search,
 };

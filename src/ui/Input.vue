@@ -1,14 +1,13 @@
 <template lang="pug">
-  .ui-input
-    input.ui-input__input(
-      v-model="currentValue"
-      :placeholder="placeholder"
-      :type="type"
-      :size="size"
-      :title="placeholder"
-      @keyup.enter="onSubmit"
-      @blur="onBlur"
-    )
+  input.ui-input(
+    v-model="currentValue"
+    :placeholder="placeholder"
+    :type="type"
+    :size="size"
+    :title="placeholder"
+    @keyup.enter="onSubmit"
+    @blur="onBlur"
+  )
 </template>
 
 <script>
@@ -61,41 +60,36 @@ export default {
 <style lang="scss">
 .ui-input {
   display: inline-block;
+  padding: $indent-md - 2;
+  padding-top: $indent-md - 3;
+  font-size: 14px;
+  background: $white;
+  border-radius: 3px;
+  border: 1px solid $grey-5;
+  outline: none;
+  color: $grey-7;
 
-  &__input {
-    width: 100%;
-    height: 100%;
-    padding: $indent-md - 2;
-    padding-top: $indent-md - 3;
-    font-size: 14px;
-    background: $grey-2;
-    border-radius: 3px;
-    border: 1px solid $grey-5;
-    outline: none;
-    color: $grey-7;
-
-    &:focus {
-      box-shadow: 0 0 1px 1pt $blue-4 inset;
-    }
+  &:focus {
+    box-shadow: 0 0 1px 1pt $blue-4 inset;
   }
 
-  &__input::-webkit-inner-spin-button {
+  &::-webkit-inner-spin-button {
     -webkit-appearance: none;
     appearance: none;
   }
 
-  &__input::-webkit-outer-spin-button {
+  &::-webkit-outer-spin-button {
     -webkit-appearance: none;
     appearance: none;
   }
 
-  &__input::-webkit-textfield-decoration-container {
+  &::-webkit-textfield-decoration-container {
     appearance: none;
   }
 
-  &__input::-webkit-input-placeholder { color: $grey-6; text-overflow: ellipsis; }
-  &__input::-ms-input-placeholder { color: $grey-6; text-overflow: ellipsis; }
-  &__input::-moz-placeholder { color: $grey-6; text-overflow: ellipsis; }
-  &__input::placeholder { color: $grey-6; text-overflow: ellipsis; }
+  &::-webkit-input-placeholder { color: $grey-6; text-overflow: ellipsis; }
+  &::-ms-input-placeholder { color: $grey-6; text-overflow: ellipsis; }
+  &::-moz-placeholder { color: $grey-6; text-overflow: ellipsis; }
+  &::placeholder { color: $grey-6; text-overflow: ellipsis; }
 }
 </style>

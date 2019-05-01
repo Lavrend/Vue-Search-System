@@ -21,9 +21,9 @@ export default new VueRouter({
     },
 
     {
-      path: '/engine',
-      name: 'engine',
-      component: () => import(/* webpackChunkName: 'engine' */ '@/pages/Engine.vue'),
+      path: '/search',
+      name: 'search',
+      component: () => import(/* webpackChunkName: 'search' */ '@/pages/SearchPage.vue'),
     },
 
     {

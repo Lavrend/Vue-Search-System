@@ -1,8 +1,7 @@
 /**
- * Engine module state
+ * Search module state
  */
 
 export default {
   items: [],
-  search: '',
 };
