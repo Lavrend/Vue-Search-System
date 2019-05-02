@@ -41,7 +41,7 @@ export default {
     width: 100%;
     height: calc(100vh - #{$headerHeight});
     min-width: $screenMinWidth;
-    background-color: rgba($white, 0.7);
+    background-color: rgba($white, 0.8);
 
     overflow: hidden;
   }

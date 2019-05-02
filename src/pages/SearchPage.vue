@@ -4,74 +4,69 @@
       SearchPanel.page-search__search
 
     .page-search__content
-      h1.page-search__title
-        | Search
-      .page-search__pagination-panel
-        uiPagination.page-search__pagination(:total="itemsLength")
-
-      ul.list
-        li.list-item(v-for="item in items")
-          | {{ item.full_name }}
+      .page-search__empty-results(v-if="!historyLength")
+        | Type a query in the search field
+      SearchResults.page-search__results
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex';
-import SearchPanel from '@/components/SearchPanel';
-import uiPagination from '@/ui/Pagination';
+import { mapGetters } from 'vuex';
+
+import SearchPanel from '@/components/Search/SearchPanel';
+import SearchResults from '@/components/Search/SearchResults';
 
 export default {
   name: 'page-search',
 
   components: {
     SearchPanel,
-    uiPagination,
+    SearchResults,
   },
 
-  // TODO add ListComponent
   computed: {
-    ...mapState('search', [
-      'items',
-    ]),
-
     ...mapGetters('search', [
-      'itemsLength',
+      'historyLength',
     ]),
   },
 };
 </script>
 
 <style lang="scss">
+$pageSearchHeaderHeight: $headerHeight;
+
 .page-search {
   position: relative;
   height: 100%;
   text-align: center;
 
+  display: flex;
+  flex-direction: column;
+
   &__header {
     width: 100%;
-    height: $headerHeight;
+    height: $pageSearchHeaderHeight;
     padding: 0 $indent-lg;
     background: $grey-1;
     border-bottom: 1px solid $grey-3;
   }
 
   &__content {
-    height: 100%;
-    padding-bottom: $indent-md;
-    overflow-y: auto;
+    width: 100%;
+    height: calc(100% - #{$pageSearchHeaderHeight});
+    padding: $indent-md $indent-lg;
+    overflow: hidden;
   }
 
-  &__title {
-    color: $blue-4;
-    margin-bottom: 0;
+  &__empty-results {
+    padding: $indent-md;
+    font-weight: bold;
+    color: $blue-5;
   }
 
-  &__pagination-panel {
-    height: 50px;
-  }
-
-  &__spinner {
-    width: 50px;
-    height: 50px;
+  @media screen and (max-width: $mobileScreenWidth) {
+    &__content {
+      padding: 0;
+    }
   }
 }
 </style>

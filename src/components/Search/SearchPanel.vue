@@ -61,30 +61,20 @@ export default {
 
   created() {
     this.$nextTick(() => {
-      this.inputFocusActive(true);
+      this.$refs.searchInput.$el.focus();
     });
   },
 
   methods: {
-    inputFocusActive(active) {
-      if (active) {
-        this.$refs.searchInput.$el.focus();
-        return;
-      }
-
-      this.$refs.searchInput.$el.blur();
-    },
-
     onSubmit() {
       if (this.hasFormLocked) return;
       this.isLoading = true;
 
-      this.$store.dispatch('search/setItems', {
+      this.$store.dispatch('search/setHistory', {
         query: this.currentInputValue,
       }).finally(() => {
         this.isLoading = false;
         this.currentInputValue = '';
-        this.inputFocusActive(false);
       });
     },
   },

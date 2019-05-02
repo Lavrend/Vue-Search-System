@@ -3,5 +3,7 @@
  */
 
 export default {
-  items: [],
+  history: [],
+  limitHistory: [],
+  currentTab: 0,
 };

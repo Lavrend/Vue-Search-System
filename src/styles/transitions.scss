@@ -56,3 +56,51 @@
     opacity: 1;
   }
 }
+
+.transition-slide-left {
+  &-enter-active,
+  &-leave-active {
+    position: absolute;
+    transition: transform .5s ease, opacity .2s ease;
+  }
+
+  &-enter {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+
+  &-leave,
+  &-enter-to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  &-leave-to {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+
+.transition-slide-right {
+  &-enter-active,
+  &-leave-active {
+    position: absolute;
+    transition: transform .5s ease, opacity .2s ease;
+  }
+
+  &-enter {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+
+  &-leave,
+  &-enter-to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  &-leave-to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}

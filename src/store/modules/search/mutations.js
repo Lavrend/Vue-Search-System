@@ -5,7 +5,15 @@
 import types from './types';
 
 export default {
-  [types.SET_ITEMS](state, { items }) {
-    state.items = items;
+  [types.SET_HISTORY](state, payload) {
+    state.history.push(payload);
+  },
+
+  [types.SET_LIMIT_HISTORY](state, { items }) {
+    state.limitHistory = items;
+  },
+
+  [types.SET_CURRENT_TAB](state, { tabIndex }) {
+    state.currentTab = tabIndex;
   },
 };

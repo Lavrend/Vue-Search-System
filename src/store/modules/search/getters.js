@@ -3,7 +3,7 @@
  */
 
 export default {
-  itemsLength(state) {
-    return state.items.length;
+  historyLength(state) {
+    return state.history.length;
   },
 };
