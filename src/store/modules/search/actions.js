@@ -34,11 +34,40 @@ export default {
     dispatch('setCurrentTab', {
       tabIndex: items.length - 1,
     });
+
+    dispatch('setCurrentHistoryActiveId', {
+      id: items[items.length - 1].id,
+    });
+  },
+
+  setCurrentHistoryItem({ dispatch, commit, state }, { id }) {
+    const items = state.history;
+
+    commit(types.SET_CURRENT_HISTORY_ITEM, {
+      item: items.find(item => item.id === id),
+    });
+
+    dispatch('setCurrentHistoryActiveId', {
+      id,
+    });
+  },
+
+  clearCurrentHistoryItem({ dispatch, commit }) {
+    commit(types.CLEAR_CURRENT_HISTORY_ITEM);
+    dispatch('setCurrentHistoryActiveId', {
+      id: 0,
+    });
   },
 
   setCurrentTab({ commit }, { tabIndex }) {
     commit(types.SET_CURRENT_TAB, {
       tabIndex,
+    });
+  },
+
+  setCurrentHistoryActiveId({ commit }, { id }) {
+    commit(types.SET_CURRENT_HISTORY_ACTIVE_ID, {
+      id,
     });
   },
 };

@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "yarn svg && vue-cli-service build",
     "lint": "vue-cli-service lint --no-fix",
-    "lint:autofix": "vue-cli-service lint --fix"
+    "lint:autofix": "vue-cli-service lint --fix",
+    "svg": "vsvg -s ./src/assets/icons -t ./src/compiledIcons"
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -14,6 +15,7 @@
     "numeral": "^2.0.6",
     "vue": "^2.6.10",
     "vue-router": "^3.0.3",
+    "vue-svgicon": "^3.2.6",
     "vuex": "^3.0.1"
   },
   "devDependencies": {

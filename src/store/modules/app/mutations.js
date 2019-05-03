@@ -8,4 +8,8 @@ export default {
   [types.SET_APP_READY](state, ready) {
     state.isAppReady = ready;
   },
+
+  [types.SET_HISTORY_ACTIVE](state, active) {
+    state.isHistoryActive = active;
+  },
 };

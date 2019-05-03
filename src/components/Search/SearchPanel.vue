@@ -12,8 +12,11 @@
       color="info"
       :isLoading="isLoading"
       :isLocked="hasFormLocked"
+      title="Send"
       @click="onSubmit"
-    ) Send
+    )
+      svgicon.search-panel__btn-icon(icon="search" custom)
+      span.search-panel__btn-label Send
 </template>
 
 <script>
@@ -66,16 +69,19 @@ export default {
   },
 
   methods: {
-    onSubmit() {
+    async onSubmit() {
       if (this.hasFormLocked) return;
       this.isLoading = true;
 
-      this.$store.dispatch('search/setHistory', {
+      this.$store.dispatch('app/setHistoryActive', { active: false });
+      await this.$store.dispatch('search/setHistory', {
         query: this.currentInputValue,
       }).finally(() => {
         this.isLoading = false;
         this.currentInputValue = '';
       });
+
+      this.$store.dispatch('search/clearCurrentHistoryItem');
     },
   },
 };
@@ -97,9 +103,37 @@ export default {
   }
 
   &__btn-send {
-    width: 100px;
     margin-left: $indent-md;
+    padding-left: $indent-lg;
+    padding-right: $indent-lg;
     font-size: 15px;
+  }
+
+  &__btn-icon {
+    width: .8em;
+    height: .8em;
+    margin-top: 2px;
+  }
+
+  &__btn-label {
+    margin-left: $indent-sm;
+    white-space: nowrap;
+  }
+
+  @media screen and (max-width: $mobileScreenWidth) {
+    &__btn-send {
+      padding-top: $indent-sm + 1;
+      padding-bottom: $indent-sm + 1;
+    }
+
+    &__btn-label {
+      display: none;
+    }
+
+    &__btn-icon {
+      width: 1em;
+      height: 1em;
+    }
   }
 }
 </style>

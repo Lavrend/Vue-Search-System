@@ -116,11 +116,13 @@ $mobileScreenWidth: 480px;
 
 $screenMinWidth: 320px;
 $screenMaxWidth: 1280px;
+$sidebarMinWidth: 280px;
 
 $searchListMaxWidth: 800px;
 
 $headerHeight: 50px;
 $headerShadow: 0 0 1px $dark-light, $boxShadow-black;
+$sidebarShadow: 5px 5px 10px rgba($black, 0.3);
 
 $spinnerWidth: 70px;
 $spinnerHeight: 50px;

@@ -11,7 +11,10 @@
 
     .results-item__right
       .results-item__lang {{ item.language }}
-      .results-item__stars {{ getItemStarsLabel(item.stargazers_count) }}
+      .results-item__stars
+        .results-item__stars-inner
+          svgicon.results-item__stars-icon(icon="star" custom)
+          span.results-item__stars-label {{ getItemStarsLabel(item.stargazers_count) }}
 </template>
 
 <script>
@@ -30,7 +33,7 @@ export default {
 
   methods: {
     getItemDateLabel(value) {
-      return `Updated ${_dateFormat(value)}`;
+      return `Updated ${_dateFormat.getDateLabel(value)}`;
     },
 
     getItemStarsLabel(count) {
@@ -101,8 +104,23 @@ export default {
 
   &__stars {
     color: $grey-8;
-    text-align: right;
+    fill: $grey-8;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
     flex: 1 1 auto;
+  }
+
+  &__stars-inner {
+    display: flex;
+    align-items: center;
+  }
+
+  &__stars-icon {
+    width: 1em;
+    height: 1em;
+    margin-right: $indent-xs;
+    margin-top: -$indent-xs;
   }
 
   @media screen and (max-width: $mobileScreenWidth) {

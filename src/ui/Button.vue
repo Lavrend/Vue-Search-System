@@ -81,11 +81,13 @@ export default {
     background: $white;
     border: 1px solid $grey-4;
     color: $grey-6;
+    fill: $grey-6;
 
     &:not(.ui-button--disable):hover {
       background: darken($white, 10%);
       border-color: darken($grey-4, 10%);
       color: darken($grey-6, 10%);
+      fill: darken($grey-6, 10%);
     }
   }
 
@@ -93,6 +95,7 @@ export default {
     background: $blue-3;
     border: 1px solid $blue-4;
     color: $white;
+    fill: $white;
 
     &:not(.ui-button--disable):hover {
       background: lighten($blue-3, 10%);
@@ -104,6 +107,7 @@ export default {
     background: $green-3;
     border: 1px solid $green-4;
     color: $white;
+    fill: $white;
 
     &:not(.ui-button--disable):hover {
       background: lighten($green-3, 10%);
@@ -115,6 +119,7 @@ export default {
     background: $red-3;
     border: 1px solid $red-4;
     color: $white;
+    fill: $white;
 
     &:not(.ui-button--disable):hover {
       background: lighten($red-3, 10%);
@@ -126,6 +131,7 @@ export default {
     background: $yellow-3;
     border: 1px solid $yellow-4;
     color: $white;
+    fill: $white;
 
     &:not(.ui-button--disable):hover {
       background: lighten($yellow-3, 10%);
@@ -137,6 +143,7 @@ export default {
     background: $grey-3;
     border-color: transparent;
     color: darken($grey-3, 10%);
+    fill: darken($grey-3, 10%);
     cursor: not-allowed;
   }
 

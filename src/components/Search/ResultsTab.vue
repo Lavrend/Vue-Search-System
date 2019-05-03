@@ -2,6 +2,7 @@
   .results-tab
     .results-tab__title(:title="query")
       | {{ query }}
+      svgicon.results-tab__history-icon(v-if="isHistory" icon="history" custom)
 
     .results-tab__content
       .results-tab__empty-list(v-if="!getTotalItemsCount")
@@ -46,6 +47,11 @@ export default {
       type: String,
       default: '',
     },
+
+    isHistory: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   data() {
@@ -88,12 +94,19 @@ export default {
     height: 30px;
     margin-bottom: $indent-sm;
     line-height: 30px;
-    color: $blue-4;
+    color: $white;
+    fill: $white;
     font-weight: bold;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     display: none;
+  }
+
+  &__history-icon {
+    width: 1em;
+    height: 1em;
+    margin-top: $indent-xs;
   }
 
   &__empty-list {
@@ -119,6 +132,8 @@ export default {
     position: relative;
     height: auto;
     margin-bottom: $indent-lg;
+    background: $blue-4;
+    border-radius: $borderRadius;
     overflow: visible;
     display: block !important;
 
@@ -127,10 +142,12 @@ export default {
     }
 
     &__title {
-      padding: 0 10px;
-      font-size: 24px;
+      padding: 0 $indent-md;
+      font-size: 20px;
       text-align: left;
-      display: block;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
     &__content {

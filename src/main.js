@@ -8,6 +8,7 @@ import config from '@/config';
 
 // Plugins
 import '@/plugins/http';
+import '@/plugins/svgicons';
 
 Vue.config.productionTip = false;
 Vue.config.devtools = config.DEBUG;
