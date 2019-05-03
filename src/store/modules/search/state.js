@@ -8,4 +8,5 @@ export default {
   currentHistoryItem: null,
   currentActiveItemId: 0,
   currentTab: 0,
+  currentModalItem: {},
 };

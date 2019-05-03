@@ -12,4 +12,8 @@ export default {
   [types.SET_HISTORY_ACTIVE](state, active) {
     state.isHistoryActive = active;
   },
+
+  [types.SET_MODAL_ACTIVE](state, active) {
+    state.isModalActive = active;
+  },
 };

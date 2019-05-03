@@ -70,4 +70,10 @@ export default {
       id,
     });
   },
+
+  setCurrentModalItem({ commit }, { item }) {
+    commit(types.SET_CURRENT_MODAL_ITEM, {
+      item,
+    });
+  },
 };

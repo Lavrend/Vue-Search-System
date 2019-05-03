@@ -7,7 +7,7 @@
 
     .page-home__content
       .page-home__flex-block
-        h1.page-home__title.glitch-text(v-show="isReady" data-text="SEARCH SYSTEM")
+        h1.page-home__title.glitch-text.notranslate(v-show="isReady" data-text="SEARCH SYSTEM")
           | SEARCH SYSTEM
         transition(name="transition-scale")
           p.page-home__description(v-show="isReady")

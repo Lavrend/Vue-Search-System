@@ -5,16 +5,31 @@
     main.layout-default__content
       transition(name="transition-zoom" mode="out-in")
         slot
+
+    transition(name="transition-fade")
+      .layout-default__overlay(v-show="isModalActive")
+    transition(name="transition-scale")
+      Modal.layout-default__modal(v-show="isModalActive")
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 import LayoutHeader from '@/components/Header';
+import Modal from '@/components/Modal';
 
 export default {
   name: 'layout-default',
 
   components: {
     LayoutHeader,
+    Modal,
+  },
+
+  computed: {
+    ...mapState('app', [
+      'isModalActive',
+    ]),
   },
 };
 </script>
@@ -44,6 +59,18 @@ export default {
     background-color: rgba($white, 0.8);
 
     overflow: hidden;
+  }
+
+  &__overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba($black,  0.5);
+
+    // Need for display the overlay correct
+    z-index: $zIndexOverlay;
   }
 }
 </style>

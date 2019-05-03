@@ -30,6 +30,7 @@ export default {
 
     isLocked: Boolean,
     isLoading: Boolean,
+    isRounded: Boolean,
   },
 
   components: {
@@ -43,6 +44,7 @@ export default {
         'ui-button--loading': this.isLoading,
         'ui-button--locked': this.isLocked,
         'ui-button--disable': this.isLocked || this.isLoading,
+        'ui-button--rounded': this.isRounded,
       };
     },
   },
@@ -145,6 +147,10 @@ export default {
     color: darken($grey-3, 10%);
     fill: darken($grey-3, 10%);
     cursor: not-allowed;
+  }
+
+  &--rounded {
+    border-radius: 100%;
   }
 
   &--loading {

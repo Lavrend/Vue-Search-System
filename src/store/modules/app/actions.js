@@ -20,4 +20,14 @@ export default {
       active,
     });
   },
+
+  setModalActive({ dispatch, commit }, { active, item }) {
+    commit(types.SET_MODAL_ACTIVE, active);
+
+    dispatch('search/setCurrentModalItem', {
+      item,
+    }, {
+      root: true,
+    });
+  },
 };

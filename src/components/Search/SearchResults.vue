@@ -21,21 +21,21 @@
 
         transition-group.search-results__tab-body(:name="transitionName" tag="div")
           ResultsTab.search-results__tab-content(
-            v-for="item, index in limitHistory"
-            v-show="!hasTabHistoryActive && currentTab === index"
-            :key="`tab-content-${index}`"
-            :class="getTabContentClass(index)"
-            :query="getQueryLabel(index)"
-            :items="getQueryItems(index)"
-          )
-
-          ResultsTab.search-results__tab-content(
             v-if="hasTabHistoryActive"
             :key="`tab-content-${getLimitHistoryLength}`"
             :class="getTabContentHistoryClass"
             :query="currentHistoryItem.query"
             :items="currentHistoryItem.items ? currentHistoryItem.items : []"
             isHistory
+          )
+
+          ResultsTab.search-results__tab-content(
+            v-for="item, index in limitHistory"
+            v-show="!hasTabHistoryActive && currentTab === index"
+            :key="`tab-content-${index}`"
+            :class="getTabContentClass(index)"
+            :query="getQueryLabel(index)"
+            :items="getQueryItems(index)"
           )
 </template>
 

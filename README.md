@@ -7,6 +7,8 @@ Vue Search System - это поисковая система по репозит
 * Кроссбраузерность (для IE >= 10)
 * Демонстрация возможностей связки Vue.js + Vuex
 
+## [DEMO](https://vue-search-system.now.sh/)
+
 ## Стэк технологий
 
 * [Vue.js](https://ru.vuejs.org/)
@@ -29,12 +31,15 @@ vue-search-system
 └── public/
 └── src/
     └── assets/
+    └── compiledIcons/
     └── components/
     └── config/
     └── layouts/
     └── pages/
+    └── plugins/
     └── store/
     └── styles/
+    └── ui/
     └── utils/
     |
     └── App.vue
@@ -47,13 +52,16 @@ vue-search-system
 └── ...
 ```
 
+* compiledIcons/ - скомпилированные svg-иконки
 * assets/ - основные ассеты приложения (шрифты, картинки, иконки, и т.д.)
 * components/ - основные компоненты приложения
 * config/ - конфиги
 * layouts/ - компоненты отображения, макеты (layouts)
 * pages/ - компоненты страниц (Home, About, etc.)
+* plugins/ - кастомные функционал Vue.js (Плагины)
 * store/ - компоненты хранилища, глобальное состояние (Vuex Store)
 * styles/ - глобальные стили (миксины, variables, transitions, etc.)
+* ui/ - базовые, кастомные компоненты интерфейса (кнопки, селекты, инпуты, иконки, и т.д.)
 * utils/ - вспомогательные скрипты и утилиты (Хэлперы)
 * App.vue - основной компонент приложения
 * main.js - точка входа
@@ -73,10 +81,15 @@ cd vue-gallery
 yarn install
 ```
 
-### 2. Собрать локально, запустить дев сервер
+### 2. Собрать svg иконки (разовая сборка)
+```
+yarn run svg
+```
+
+### 3. Собрать локально, запустить дев сервер
 
 ```sh
-yarn dev
+yarn start
 ```
 
 ## Боевая сборка
@@ -92,5 +105,12 @@ yarn build
 ```
 yarn lint
 ```
+
+### Деплой
+```
+yarn deploy
+```
+
+Для деплоя и хостинга используется платформа Now Platform v2.0 - [Cборщик @now/static-build](https://zeit.co/guides/deploying-vuejs-to-now)
 
 ## TODO

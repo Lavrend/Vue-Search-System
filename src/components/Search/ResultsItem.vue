@@ -1,23 +1,26 @@
 <template lang="pug">
   li.results-item
     .results-item__left
-      h3.results-item__name
-        a.results-item__name-inner
+      h3.results-item__name.notranslate
+        a.results-item__name-inner(@click.prevent="openModal")
           | {{ item.full_name }}
       p.results-item__description
         | {{ item.description }}
-      p.results-item__updated-at
+      p.results-item__updated-at.notranslate
         | {{ getItemDateLabel(item.pushed_at) }}
 
-    .results-item__right
-      .results-item__lang {{ item.language }}
+    .results-item__right.notranslate
+      .results-item__lang
+        span.results-item__lang-color(v-if="item.language" :style="getLangColorStyles(item.language)")
+        | {{ item.language }}
       .results-item__stars
         .results-item__stars-inner
-          svgicon.results-item__stars-icon(icon="star" custom)
+          svgicon.results-item__stars-icon(v-if="item.stargazers_count" icon="star" custom)
           span.results-item__stars-label {{ getItemStarsLabel(item.stargazers_count) }}
 </template>
 
 <script>
+import langsColors from '@/config/langsColors';
 import _numeral from 'numeral';
 import _dateFormat from '@/utils/date-format';
 
@@ -38,6 +41,19 @@ export default {
 
     getItemStarsLabel(count) {
       return count > 0 ? _numeral(count).format('0[.]0a') : '';
+    },
+
+    getLangColorStyles(lang) {
+      return {
+        backgroundColor: langsColors[lang] || '#ccc',
+      };
+    },
+
+    openModal() {
+      this.$store.dispatch('app/setModalActive', {
+        active: true,
+        item: this.item,
+      });
     },
   },
 };
@@ -100,6 +116,16 @@ export default {
     padding-right: $indent-lg - 4;
     color: $grey-8;
     flex: 1 1 auto;
+  }
+
+  &__lang-color {
+    position: relative;
+    width: 12px;
+    height: 12px;
+    top: 1px;
+    right: $indent-md - 2;
+    border-radius: 50%;
+    display: inline-block;
   }
 
   &__stars {

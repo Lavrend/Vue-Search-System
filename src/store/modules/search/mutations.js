@@ -28,4 +28,8 @@ export default {
   [types.SET_CURRENT_HISTORY_ACTIVE_ID](state, { id }) {
     state.currentActiveItemId = id;
   },
+
+  [types.SET_CURRENT_MODAL_ITEM](state, { item }) {
+    state.currentModalItem = item;
+  },
 };

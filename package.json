@@ -7,7 +7,10 @@
     "build": "yarn svg && vue-cli-service build",
     "lint": "vue-cli-service lint --no-fix",
     "lint:autofix": "vue-cli-service lint --fix",
-    "svg": "vsvg -s ./src/assets/icons -t ./src/compiledIcons"
+    "svg": "vsvg -s ./src/assets/icons -t ./src/compiledIcons",
+
+    "now-build": "vue-cli-service build",
+    "deploy": "yarn build && now"
   },
   "dependencies": {
     "axios": "^0.18.0",

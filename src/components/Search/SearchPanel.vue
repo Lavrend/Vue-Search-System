@@ -79,6 +79,7 @@ export default {
       }).finally(() => {
         this.isLoading = false;
         this.currentInputValue = '';
+        this.$refs.searchInput.$el.blur();
       });
 
       this.$store.dispatch('search/clearCurrentHistoryItem');
