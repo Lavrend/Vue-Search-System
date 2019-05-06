@@ -111,21 +111,27 @@ $zIndexOverlay: $zIndex-200;
 $zIndexContent: $zIndex-150;
 // -----------------------
 
-// Global App variables
-$mobileScreenWidth: 480px;
-
-$screenMinWidth: 320px;
-$screenMaxWidth: 1280px;
-$sidebarMinWidth: 280px;
-
-$searchListMaxWidth: 800px;
-
-$headerHeight: 50px;
-$headerShadow: 0 0 1px $dark-light, $boxShadow-black;
-$sidebarShadow: 5px 5px 10px rgba($black, 0.3);
-
-$spinnerWidth: 70px;
-$spinnerHeight: 50px;
-$modalDefaultWidth: 700px;
-
 $borderRadius: 10px;
+
+// -----------------------
+
+// Global App variables
+
+$screenWidth-mobile: 480px;
+
+$minWidth-app: 320px;
+$maxWidth-app: 1280px;
+$minWidth-sidebar: 280px;
+
+$maxWidth-searchResult: 800px;
+
+$height-header: 50px;
+$shadow-header: 0 0 1px $dark-light, $boxShadow-black;
+$shadow-sidebar: 5px 5px 10px rgba($black, 0.3);
+
+$width-spinner: 70px;
+$height-spinner: 50px;
+
+$width-modal: 700px;
+
+$height-resultHeader: 40px;

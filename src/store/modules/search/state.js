@@ -2,11 +2,14 @@
  * Search module state
  */
 
+
 export default {
-  history: [],
-  limitHistory: [],
-  currentHistoryItem: null,
-  currentActiveItemId: 0,
-  currentTab: 0,
+  historyData: [],
+  resultsData: [],
+  currentItem: 0,
+
+  historyItem: null,
   currentModalItem: {},
+
+  transitionName: 'transition-slide-left',
 };

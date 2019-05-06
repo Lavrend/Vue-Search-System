@@ -1,13 +1,13 @@
 <template lang="pug">
   aside.history-sidebar(:class="getSidebarClass")
     .history-sidebar__wrapper
-      .history-sidebar__empty(v-if="!historyLength") No history
+      .history-sidebar__empty(v-if="!getHistoryLength") No history
       nav.history-sidebar__items-list
         .history-sidebar__item(
-          v-for="item, index in history"
+          v-for="item in historyData"
           :key="item.id"
-          :class="getItemClass(item, index)"
-          @click="onHistoryItemClick(item, index)"
+          :class="getItemClass(item)"
+          @click="activeHistory(item)"
         )
           .history-sidebar__item-label {{ getItemLabel(item) }}
           .history-sidebar__item-count {{ getItemCountLabel(item.items.length) }}
@@ -35,12 +35,12 @@ export default {
     ]),
 
     ...mapState('search', [
-      'history',
-      'currentActiveItemId',
+      'historyData',
+      'currentItem',
     ]),
 
     ...mapGetters('search', [
-      'historyLength',
+      'getHistoryLength',
     ]),
 
     getSidebarClass() {
@@ -51,10 +51,9 @@ export default {
   },
 
   methods: {
-    getItemClass(item, index) {
+    getItemClass(item) {
       return {
-        'history-sidebar__item--active': item.id === this.currentActiveItemId && !this.hasDisableItem(index),
-        'history-sidebar__item--disable': this.hasDisableItem(index), // current active tabs will not used
+        'history-sidebar__item--active': this.currentItem === item.id,
       };
     },
 
@@ -66,18 +65,11 @@ export default {
       return _numeral(count).format('0[.]0a');
     },
 
-    hasDisableItem(index) {
-      return index + 1 > this.historyLength - config.HISTORY_LIMIT;
-    },
+    activeHistory(item) {
+      if (this.currentItem === item.id) return;
 
-    closeHistory() {
-      this.$store.dispatch('app/setHistoryActive', { active: false });
-    },
-
-    onHistoryItemClick(item, index) {
-      if (this.hasDisableItem(index) || item.id === this.currentActiveItemId) return;
-      this.$store.dispatch('search/setCurrentHistoryItem', { id: item.id });
-      this.closeHistory();
+      this.$store.dispatch('search/setTransitionName', item);
+      this.$store.dispatch('search/setActiveHistory', item);
     },
   },
 };
@@ -87,13 +79,13 @@ export default {
 .history-sidebar {
   position: absolute;
   width: 30%;
-  height: calc(100% - #{$headerHeight});
-  min-width: $sidebarMinWidth;
+  height: calc(100% - #{$height-header});
+  min-width: $minWidth-sidebar;
   left: 0;
-  top: $headerHeight;
+  top: $height-header;
   background: $grey-3;
   border-right: 1px solid $grey-4;
-  box-shadow: $sidebarShadow;
+  box-shadow: $shadow-sidebar;
   text-align: left;
   opacity: 0;
 
@@ -139,7 +131,7 @@ export default {
     justify-content: space-between;
     flex-wrap: wrap;
 
-    &:not(.history-sidebar__item--disable):hover {
+    &:hover {
       transform: translateX($indent-md);
       color: $blue-6;
     }
@@ -148,12 +140,6 @@ export default {
   &__item--active {
     transform: translateX($indent-md);
     color: $blue-6;
-    cursor: default;
-  }
-
-  &__item--disable {
-    font-weight: normal;
-    color: $grey-6;
     cursor: default;
   }
 

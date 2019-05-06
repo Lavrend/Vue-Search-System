@@ -1,22 +1,26 @@
 <template lang="pug">
-  .results-tab
-    .results-tab__title(:title="query")
-      | {{ query }}
-      svgicon.results-tab__history-icon(v-if="isHistory" icon="history" custom)
+  .result-body-list(:class="getListClass")
+    ResultHeaderItem.result-body-list__title(
+      :label="label"
+      :isActive="isActive"
+      :isHistory="isHistory"
+      @closeTab="closeTab"
+    )
 
-    .results-tab__content
-      .results-tab__empty-list(v-if="!getTotalItemsCount")
+    .result-body-list__content
+      .result-body-list__empty(v-if="!getTotalItemsCount")
         | Couldn't find any repositories matching
+
       transition(name="transition-scale" mode="out-in")
-        ul.results-tab__list(:key="getListUniqKey")
-          ResultsItem.results-tab__list-item(
+        ul.result-body-list__items(:key="getListUniqKey")
+          ResultBodyItem.result-body-list__item(
             v-for="item in getPaginationItems"
             :item="item"
             :key="item.id"
           )
 
-      .results-tab__pagination-panel
-        uiPagination.results-tab__pagination(
+      .result-body-list__pagination-panel
+        uiPagination.result-body-list__pagination(
           :total="getTotalItemsCount"
           :minPages="2"
           @changePage="onChangePage"
@@ -26,14 +30,16 @@
 <script>
 import _paginate from '@/utils/paginate';
 
-import ResultsItem from '@/components/Search/ResultsItem';
+import ResultHeaderItem from '@/components/SearchResult/ResultHeaderItem';
+import ResultBodyItem from '@/components/SearchResult/ResultBodyItem';
 import uiPagination from '@/ui/Pagination';
 
 export default {
-  name: 'results-tab',
+  name: 'result-body-list',
 
   components: {
-    ResultsItem,
+    ResultHeaderItem,
+    ResultBodyItem,
     uiPagination,
   },
 
@@ -43,9 +49,14 @@ export default {
       default: () => [],
     },
 
-    query: {
-      type: String,
+    label: {
+      type: [String, Number],
       default: '',
+    },
+
+    isActive: {
+      type: Boolean,
+      default: false,
     },
 
     isHistory: {
@@ -61,6 +72,13 @@ export default {
   },
 
   computed: {
+    getListClass() {
+      return {
+        'result-body-list--active': this.isActive,
+        'result-body-list--history': this.isHistory,
+      };
+    },
+
     getListUniqKey() {
       return `${this.currentPage}_${this.query}`;
     },
@@ -79,12 +97,16 @@ export default {
     onChangePage(page = 1) {
       this.currentPage = page;
     },
+
+    closeTab(event) {
+      this.$emit('closeTab', event);
+    },
   },
 };
 </script>
 
 <style lang="scss">
-.results-tab {
+.result-body-list {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -93,42 +115,34 @@ export default {
   &__title {
     height: 30px;
     margin-bottom: $indent-sm;
+    padding: 0 $indent-md;
+    font-size: 20px;
     line-height: 30px;
     color: $white;
     fill: $white;
     font-weight: bold;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
     display: none;
   }
 
-  &__history-icon {
-    width: 1em;
-    height: 1em;
-    margin-top: $indent-xs;
-  }
-
-  &__empty-list {
+  &__empty {
     padding: $indent-lg;
     font-weight: bold;
     color: $grey-7;
   }
 
-  &__list {
+  &__items {
     padding: 0 $indent-lg;
-  }
-
-  &__list-item {
-    display: flex;
-    justify-content: flex-start;
   }
 
   &__pagination-panel {
     margin: $indent-md 0;
   }
 
-  @media screen and (max-width: $mobileScreenWidth) {
+  &--history {
+    background: $yellow-1;
+  }
+
+  @media screen and (max-width: $screenWidth-mobile) {
     position: relative;
     height: auto;
     margin-bottom: $indent-lg;
@@ -142,12 +156,7 @@ export default {
     }
 
     &__title {
-      padding: 0 $indent-md;
-      font-size: 20px;
-      text-align: left;
       display: flex;
-      align-items: center;
-      justify-content: space-between;
     }
 
     &__content {
@@ -157,13 +166,15 @@ export default {
       box-shadow: $boxShadow-black;
     }
 
-    &__list-item {
-      flex-direction: column;
-    }
-
     &__pagination-panel {
       margin: 0;
       margin-top: $indent-md;
+    }
+
+    &--history {
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      background: $yellow-4;
     }
   }
 }

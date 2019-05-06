@@ -5,31 +5,31 @@
 import types from './types';
 
 export default {
-  [types.SET_HISTORY](state, payload) {
-    state.history.push(payload);
+  [types.SET_HISTORY_DATA](state, data) {
+    state.historyData.unshift(data);
   },
 
-  [types.SET_LIMIT_HISTORY](state, { items }) {
-    state.limitHistory = items;
+  [types.SET_RESULTS_DATA](state, data) {
+    state.resultsData = data;
   },
 
-  [types.SET_CURRENT_HISTORY_ITEM](state, { item }) {
-    state.currentHistoryItem = item;
+  [types.SET_CURRENT_ITEM](state, itemId) {
+    state.currentItem = itemId;
   },
 
-  [types.CLEAR_CURRENT_HISTORY_ITEM](state) {
-    state.currentHistoryItem = null;
+  [types.SET_HISTORY_ITEM](state, item) {
+    state.historyItem = item;
   },
 
-  [types.SET_CURRENT_TAB](state, { tabIndex }) {
-    state.currentTab = tabIndex;
+  [types.CLEAR_HISTORY_ITEM](state) {
+    state.historyItem = null;
   },
 
-  [types.SET_CURRENT_HISTORY_ACTIVE_ID](state, { id }) {
-    state.currentActiveItemId = id;
-  },
-
-  [types.SET_CURRENT_MODAL_ITEM](state, { item }) {
+  [types.SET_CURRENT_MODAL_ITEM](state, item) {
     state.currentModalItem = item;
+  },
+
+  [types.SET_TRANSITION_NAME](state, newName) {
+    state.transitionName = newName;
   },
 };

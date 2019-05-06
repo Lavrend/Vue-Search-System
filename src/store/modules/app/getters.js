@@ -3,5 +3,7 @@
  */
 
 export default {
-
+  hasModalActive(state) {
+    return state.currentModal && state.currentModal.name;
+  },
 };

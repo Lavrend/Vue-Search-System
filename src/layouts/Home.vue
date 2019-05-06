@@ -29,8 +29,8 @@ export default {
   &__header {
     position: absolute;
     width: 100%;
-    height: $headerHeight;
-    min-width: $screenMinWidth;
+    height: $height-header;
+    min-width: $minWidth-app;
     text-align: left;
 
     // Need for display the layer correct (above content layer)
@@ -40,7 +40,7 @@ export default {
   &__header-wrapper {
     width: 100%;
     height: 100%;
-    max-width: $screenMaxWidth;
+    max-width: $maxWidth-app;
     margin: 0 auto;
     padding: 0 $indent-lg;
 
@@ -67,7 +67,7 @@ export default {
   &__content {
     width: 100%;
     height: 100%;
-    min-width: $screenMinWidth;
+    min-width: $minWidth-app;
     color: $white;
 
     // overflow-y: auto;

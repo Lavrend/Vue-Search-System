@@ -49,9 +49,9 @@ export default {
 
   &__spinner {
     position: relative;
-    width: $spinnerWidth;
-    height: $spinnerHeight;
-    top: $headerHeight;
+    width: $width-spinner;
+    height: $height-spinner;
+    top: $height-header;
     margin: 0 auto;
   }
 

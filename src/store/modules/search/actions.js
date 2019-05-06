@@ -2,78 +2,75 @@
  * Actions for the Search module
  */
 
-import Vue from 'vue';
 import types from './types';
 
+import AppCore from '@/core';
 import config from '@/config';
 
 export default {
-  async setHistory({ dispatch, commit, state }, { query }) {
-    // TODO Simple query will return only 30 entries... need use API pagination
-    // TODO move to AppCore
-    const result = await Vue.http.get(`search/repositories?q=${query}+in:name,description`);
-    const currentHistoryLength = state.history.length;
+  async setHistoryData({ dispatch, commit, state }, { query }) {
+    const result = await AppCore.search.getSearchData(query);
+    const currentHistoryLength = state.historyData.length;
 
-    commit(types.SET_HISTORY, {
+    commit(types.SET_HISTORY_DATA, {
       id: currentHistoryLength + 1,
-      items: result.data.items,
+      items: result.items,
       createdAt: Date.now(),
       query,
     });
 
-    dispatch('setLimitHistory');
+    dispatch('setItems');
   },
 
-  setLimitHistory({ dispatch, commit, state }) {
-    const items = state.history.slice(-config.HISTORY_LIMIT);
+  setItems({ dispatch, commit, state }) {
+    const items = state.historyData.slice(0, config.HISTORY_LIMIT);
 
-    commit(types.SET_LIMIT_HISTORY, {
-      items,
-    });
-
-    dispatch('setCurrentTab', {
-      tabIndex: items.length - 1,
-    });
-
-    dispatch('setCurrentHistoryActiveId', {
-      id: items[items.length - 1].id,
-    });
+    commit(types.SET_RESULTS_DATA, items);
+    dispatch('setCurrentItem', items[0].id);
   },
 
-  setCurrentHistoryItem({ dispatch, commit, state }, { id }) {
-    const items = state.history;
-
-    commit(types.SET_CURRENT_HISTORY_ITEM, {
-      item: items.find(item => item.id === id),
-    });
-
-    dispatch('setCurrentHistoryActiveId', {
-      id,
-    });
+  setCurrentItem({ commit }, itemId) {
+    commit(types.SET_CURRENT_ITEM, itemId);
   },
 
-  clearCurrentHistoryItem({ dispatch, commit }) {
-    commit(types.CLEAR_CURRENT_HISTORY_ITEM);
-    dispatch('setCurrentHistoryActiveId', {
-      id: 0,
-    });
+  setHistoryItem({ commit }, item) {
+    commit(types.SET_HISTORY_ITEM, item);
   },
 
-  setCurrentTab({ commit }, { tabIndex }) {
-    commit(types.SET_CURRENT_TAB, {
-      tabIndex,
-    });
+  clearHistoryItem({ commit }) {
+    commit(types.CLEAR_HISTORY_ITEM);
   },
 
-  setCurrentHistoryActiveId({ commit }, { id }) {
-    commit(types.SET_CURRENT_HISTORY_ACTIVE_ID, {
-      id,
-    });
+  setTransitionName({ commit, state }, newItem) {
+    const transitionName = state.currentItem > newItem.id ? 'transition-slide-left' : 'transition-slide-right';
+
+    commit(types.SET_TRANSITION_NAME, transitionName);
   },
 
-  setCurrentModalItem({ commit }, { item }) {
-    commit(types.SET_CURRENT_MODAL_ITEM, {
-      item,
-    });
+  setActiveHistory({ dispatch, getters, state }, item) {
+    if (getters.hasHistoryItem) {
+      dispatch('clearHistoryItem');
+    }
+
+    if (state.resultsData.find(foundItem => foundItem.id === item.id)) {
+      dispatch('setCurrentItem', item.id);
+    } else {
+      dispatch('setCurrentItem', item.id);
+      dispatch('setHistoryItem', item);
+    }
+
+    dispatch('app/setHistoryActive', false, { root: true });
+  },
+
+  closeActiveHistory({ dispatch, state }) {
+    const lastItem = state.resultsData[0];
+
+    dispatch('setTransitionName', lastItem);
+    dispatch('clearHistoryItem');
+    dispatch('setCurrentItem', lastItem.id);
+  },
+
+  setCurrentModalItem({ commit }, item) {
+    commit(types.SET_CURRENT_MODAL_ITEM, item);
   },
 };

@@ -1,22 +1,21 @@
 <template lang="pug">
-  li.results-item
-    .results-item__left
-      h3.results-item__name.notranslate
-        a.results-item__name-inner(@click.prevent="openModal")
-          | {{ item.full_name }}
-      p.results-item__description
+  li.result-body-item
+    .result-body-item__left
+      a.result-body-item__name.notranslate(@click.prevent="openModal")
+        | {{ item.full_name }}
+      p.result-body-item__description
         | {{ item.description }}
-      p.results-item__updated-at.notranslate
+      p.result-body-item__updated-at.notranslate
         | {{ getItemDateLabel(item.pushed_at) }}
 
-    .results-item__right.notranslate
-      .results-item__lang
-        span.results-item__lang-color(v-if="item.language" :style="getLangColorStyles(item.language)")
+    .result-body-item__right.notranslate
+      .result-body-item__lang
+        span.result-body-item__lang-color(v-if="item.language" :style="getLangColorStyles(item.language)")
         | {{ item.language }}
-      .results-item__stars
-        .results-item__stars-inner
-          svgicon.results-item__stars-icon(v-if="item.stargazers_count" icon="star" custom)
-          span.results-item__stars-label {{ getItemStarsLabel(item.stargazers_count) }}
+      .result-body-item__stars
+        .result-body-item__stars-inner
+          svgicon.result-body-item__stars-icon(icon="star" custom)
+          span.result-body-item__stars-label {{ getItemStarsLabel(item.stargazers_count) }}
 </template>
 
 <script>
@@ -25,12 +24,12 @@ import _numeral from 'numeral';
 import _dateFormat from '@/utils/date-format';
 
 export default {
-  name: 'results-item',
+  name: 'result-body-item',
 
   props: {
     item: {
       type: Object,
-      default: () => [],
+      default: () => {},
     },
   },
 
@@ -40,7 +39,7 @@ export default {
     },
 
     getItemStarsLabel(count) {
-      return count > 0 ? _numeral(count).format('0[.]0a') : '';
+      return count > 0 ? _numeral(count).format('0[.]0a') : 0;
     },
 
     getLangColorStyles(lang) {
@@ -50,9 +49,9 @@ export default {
     },
 
     openModal() {
-      this.$store.dispatch('app/setModalActive', {
-        active: true,
-        item: this.item,
+      this.$store.dispatch('app/openModal', {
+        name: 'ModalInfo',
+        data: this.item,
       });
     },
   },
@@ -60,11 +59,14 @@ export default {
 </script>
 
 <style lang="scss">
-.results-item {
+.result-body-item {
   padding: $indent-lg 0;
   border-bottom: 1px solid $grey-4;
   text-align: left;
   user-select: text;
+
+  display: flex;
+  justify-content: flex-start;
 
   &__left {
     padding-right: $indent-lg;
@@ -74,15 +76,12 @@ export default {
   &__name {
     font-weight: bold;
     font-size: 20px;
+    line-height: 1.2;
     color: $blue-5;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  &__name-inner {
     text-decoration: none;
+    word-break: break-word;
     cursor: pointer;
+    display: block;
 
     &:hover {
       text-decoration: underline;
@@ -96,6 +95,7 @@ export default {
     font-size: 14px;
     line-height: 1.5;
     color: $grey-8;
+    word-break: break-word;
   }
 
   &__updated-at {
@@ -115,15 +115,15 @@ export default {
   &__lang {
     padding-right: $indent-lg - 4;
     color: $grey-8;
+    word-break: break-word;
     flex: 1 1 auto;
   }
 
   &__lang-color {
-    position: relative;
     width: 12px;
     height: 12px;
-    top: 1px;
-    right: $indent-md - 2;
+    margin-bottom: -1px;
+    margin-right: $indent-md - 2;
     border-radius: 50%;
     display: inline-block;
   }
@@ -149,8 +149,9 @@ export default {
     margin-top: -$indent-xs;
   }
 
-  @media screen and (max-width: $mobileScreenWidth) {
+  @media screen and (max-width: $screenWidth-mobile) {
     padding: $indent-md 0;
+    flex-direction: column;
 
     &__left {
       padding-right: 0;

@@ -34,6 +34,7 @@ vue-search-system
     └── compiledIcons/
     └── components/
     └── config/
+    └── core/
     └── layouts/
     └── pages/
     └── plugins/
@@ -56,6 +57,7 @@ vue-search-system
 * assets/ - основные ассеты приложения (шрифты, картинки, иконки, и т.д.)
 * components/ - основные компоненты приложения
 * config/ - конфиги
+* core/ - основное ядро приложения, "Фасад" для манипуляций с данными (запросы к API, фильтрация, и т.д.)
 * layouts/ - компоненты отображения, макеты (layouts)
 * pages/ - компоненты страниц (Home, About, etc.)
 * plugins/ - кастомные функционал Vue.js (Плагины)

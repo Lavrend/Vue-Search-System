@@ -5,5 +5,5 @@
 export default {
   isAppReady: false,
   isHistoryActive: false,
-  isModalActive: false,
+  currentModal: null,
 };

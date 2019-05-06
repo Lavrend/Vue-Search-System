@@ -47,7 +47,7 @@ export default {
 .page-home {
   position: relative;
   height: 100%;
-  min-height: $screenMinWidth;
+  min-height: $minWidth-app;
   text-align: center;
 
   &__background {

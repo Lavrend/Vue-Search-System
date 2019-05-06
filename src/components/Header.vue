@@ -30,10 +30,10 @@ export default {
 <style lang="scss">
 .header {
   width: 100%;
-  height: $headerHeight;
-  min-width: $screenMinWidth;
+  height: $height-header;
+  min-width: $minWidth-app;
   text-align: left;
-  box-shadow: $headerShadow;
+  box-shadow: $shadow-header;
 
   // Need for display the layer correct (above content layer and sidebar)
   z-index: $zIndex-200;
@@ -41,7 +41,7 @@ export default {
   &__wrapper {
     width: 100%;
     height: 100%;
-    max-width: $screenMaxWidth;
+    max-width: $maxWidth-app;
     margin: 0 auto;
     padding: 0 $indent-lg;
 

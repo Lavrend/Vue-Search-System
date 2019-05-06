@@ -8,12 +8,13 @@
       )
         span.page-search__history-label Query history
         svgicon.page-search__history-icon(icon="history" custom)
-      SearchPanel.page-search__search
+
+      SearchHeader.page-search__search
 
     .page-search__content
-      .page-search__empty-results(v-if="!historyLength")
+      .page-search__empty-results(v-if="!getHistoryLength")
         | Type a query in the search field
-      SearchResults.page-search__results
+      SearchContent.page-search__results
 
     .page-search__sidebar-overlay(v-if="isHistoryActive" @click="toggleHistory")
     HistorySidebar.page-search__history-sidebar
@@ -22,16 +23,16 @@
 <script>
 import { mapState, mapGetters } from 'vuex';
 
-import SearchPanel from '@/components/Search/SearchPanel';
-import SearchResults from '@/components/Search/SearchResults';
+import SearchHeader from '@/components/SearchHeader';
+import SearchContent from '@/components/SearchContent';
 import HistorySidebar from '@/components/History';
 
 export default {
   name: 'page-search',
 
   components: {
-    SearchPanel,
-    SearchResults,
+    SearchHeader,
+    SearchContent,
     HistorySidebar,
   },
 
@@ -41,7 +42,7 @@ export default {
     ]),
 
     ...mapGetters('search', [
-      'historyLength',
+      'getHistoryLength',
     ]),
 
     getHistoryBtnClass() {
@@ -65,7 +66,7 @@ export default {
 </script>
 
 <style lang="scss">
-$pageSearchHeaderHeight: $headerHeight;
+$pageSearchHeaderHeight: $height-header;
 
 .page-search {
   position: relative;
@@ -162,7 +163,7 @@ $pageSearchHeaderHeight: $headerHeight;
     height: 100%;
   }
 
-  @media screen and (max-width: $mobileScreenWidth) {
+  @media screen and (max-width: $screenWidth-mobile) {
     &__header {
       padding: 0 $indent-md;
     }

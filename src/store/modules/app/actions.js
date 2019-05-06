@@ -9,25 +9,25 @@ export default {
     commit(types.SET_APP_READY, ready);
   },
 
-  setHistoryActive({ commit }, { active }) {
+  setHistoryActive({ commit, state }, active) {
+    if (state.isHistoryActive === active) return;
     commit(types.SET_HISTORY_ACTIVE, active);
   },
 
-  historyToggle({ state, dispatch }) {
+  historyToggle({ dispatch, state }) {
     const active = !state.isHistoryActive;
 
-    dispatch('setHistoryActive', {
-      active,
+    dispatch('setHistoryActive', active);
+  },
+
+  openModal({ commit }, { name, data }) {
+    commit(types.SET_MODAL_ACTIVE, {
+      name,
+      data,
     });
   },
 
-  setModalActive({ dispatch, commit }, { active, item }) {
-    commit(types.SET_MODAL_ACTIVE, active);
-
-    dispatch('search/setCurrentModalItem', {
-      item,
-    }, {
-      root: true,
-    });
+  closeModal({ commit }) {
+    commit(types.SET_MODAL_ACTIVE, null);
   },
 };

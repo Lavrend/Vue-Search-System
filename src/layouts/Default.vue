@@ -7,13 +7,13 @@
         slot
 
     transition(name="transition-fade")
-      .layout-default__overlay(v-show="isModalActive")
+      .layout-default__overlay(v-show="hasModalActive")
     transition(name="transition-scale")
-      Modal.layout-default__modal(v-show="isModalActive")
+      Modal.layout-default__modal(v-show="hasModalActive")
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapGetters } from 'vuex';
 
 import LayoutHeader from '@/components/Header';
 import Modal from '@/components/Modal';
@@ -27,8 +27,8 @@ export default {
   },
 
   computed: {
-    ...mapState('app', [
-      'isModalActive',
+    ...mapGetters('app', [
+      'hasModalActive',
     ]),
   },
 };
@@ -54,8 +54,8 @@ export default {
 
   &__content {
     width: 100%;
-    height: calc(100vh - #{$headerHeight});
-    min-width: $screenMinWidth;
+    height: calc(100vh - #{$height-header});
+    min-width: $minWidth-app;
     background-color: rgba($white, 0.8);
 
     overflow: hidden;

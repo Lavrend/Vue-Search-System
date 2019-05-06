@@ -23,7 +23,7 @@ export default new VueRouter({
     {
       path: '/search',
       name: 'search',
-      component: () => import(/* webpackChunkName: 'search' */ '@/pages/SearchPage.vue'),
+      component: () => import(/* webpackChunkName: 'search' */ '@/pages/Search.vue'),
     },
 
     {

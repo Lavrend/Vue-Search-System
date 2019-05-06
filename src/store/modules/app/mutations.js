@@ -13,7 +13,7 @@ export default {
     state.isHistoryActive = active;
   },
 
-  [types.SET_MODAL_ACTIVE](state, active) {
-    state.isModalActive = active;
+  [types.SET_MODAL_ACTIVE](state, payload) {
+    state.currentModal = payload;
   },
 };

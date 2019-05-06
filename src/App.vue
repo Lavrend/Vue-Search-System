@@ -78,7 +78,7 @@ export default {
     height: 100%;
     overflow: hidden;
 
-    @media screen and (max-width: $screenMinWidth) {
+    @media screen and (max-width: $minWidth-app) {
       overflow-x: auto;
     }
   }

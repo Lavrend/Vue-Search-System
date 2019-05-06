@@ -1,6 +1,6 @@
 <template lang="pug">
-  .search-panel
-    uiInput.search-panel__input(
+  .search-header
+    uiInput.search-header__input(
       v-model="currentInputValue"
       :placeholder="getPlaceholderText"
       :value="currentInputValue"
@@ -8,15 +8,15 @@
       type="search"
       @submit="onSubmit"
     )
-    uiButton.search-panel__btn-send(
+    uiButton.search-header__btn-send(
       color="info"
       :isLoading="isLoading"
       :isLocked="hasFormLocked"
       title="Send"
       @click="onSubmit"
     )
-      svgicon.search-panel__btn-icon(icon="search" custom)
-      span.search-panel__btn-label Send
+      svgicon.search-header__btn-icon(icon="search" custom)
+      span.search-header__btn-label Send
 </template>
 
 <script>
@@ -26,7 +26,7 @@ import uiInput from '@/ui/Input';
 import uiButton from '@/ui/Button';
 
 export default {
-  name: 'search-panel',
+  name: 'search-header',
 
   components: {
     uiInput,
@@ -73,8 +73,7 @@ export default {
       if (this.hasFormLocked) return;
       this.isLoading = true;
 
-      this.$store.dispatch('app/setHistoryActive', { active: false });
-      await this.$store.dispatch('search/setHistory', {
+      await this.$store.dispatch('search/setHistoryData', {
         query: this.currentInputValue,
       }).finally(() => {
         this.isLoading = false;
@@ -82,17 +81,17 @@ export default {
         this.$refs.searchInput.$el.blur();
       });
 
-      this.$store.dispatch('search/clearCurrentHistoryItem');
+      this.$store.dispatch('app/setHistoryActive', false);
     },
   },
 };
 </script>
 
 <style lang="scss">
-.search-panel {
+.search-header {
   width: 100%;
   height: 100%;
-  max-width: $searchListMaxWidth;
+  max-width: $maxWidth-searchResult;
   margin: 0 auto;
 
   display: flex;
@@ -121,7 +120,7 @@ export default {
     white-space: nowrap;
   }
 
-  @media screen and (max-width: $mobileScreenWidth) {
+  @media screen and (max-width: $screenWidth-mobile) {
     &__btn-send {
       padding-top: $indent-sm + 1;
       padding-bottom: $indent-sm + 1;
