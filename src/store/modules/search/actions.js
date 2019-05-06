@@ -2,6 +2,7 @@
  * Actions for the Search module
  */
 
+import Vue from 'vue';
 import types from './types';
 
 import AppCore from '@/core';
@@ -9,12 +10,12 @@ import config from '@/config';
 
 export default {
   async setHistoryData({ dispatch, commit, state }, { query }) {
-    const result = await AppCore.search.getSearchData(query);
+    const searchData = await AppCore.search.getSearchData(query);
     const currentHistoryLength = state.historyData.length;
 
     commit(types.SET_HISTORY_DATA, {
       id: currentHistoryLength + 1,
-      items: result.items,
+      items: searchData,
       createdAt: Date.now(),
       query,
     });
@@ -60,6 +61,7 @@ export default {
     }
 
     dispatch('app/setHistoryActive', false, { root: true });
+    Vue.bus.$emit('history:change', item.id);
   },
 
   closeActiveHistory({ dispatch, state }) {

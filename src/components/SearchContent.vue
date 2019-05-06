@@ -48,6 +48,7 @@ export default {
 
 <style lang="scss">
 .search-content {
+  position: relative;
   width: 100%;
   height: 100%;
   max-width: $maxWidth-searchResult;

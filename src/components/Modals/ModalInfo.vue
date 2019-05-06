@@ -2,14 +2,14 @@
   article.modal-info
     .modal-info__main
       h3.modal-info__name
-        | {{ data.full_name }}
+        | {{ data.name }}
       p.modal-info__description
         | {{ data.description }}
 
     .modal-info__content-summary.notranslate
       .modal-info__summary-left
         .modal-info__updated-at
-          | {{ getItemDateLabel(data.pushed_at) }}
+          | {{ getItemDateLabel(data.pushedAt) }}
 
       .modal-info__summary-main.notranslate
         .modal-info__watchers
@@ -20,7 +20,7 @@
         .modal-info__stars
           .modal-info__stars-inner
             svgicon.modal-info__stars-icon(icon="star" custom)
-            span.modal-info__stars-label {{ getItemShortLabel(data.stargazers_count) }}
+            span.modal-info__stars-label {{ getItemShortLabel(data.starsCount) }}
 
         .modal-info__forks
           .modal-info__forks-inner
@@ -64,7 +64,7 @@ export default {
 
   computed: {
     getOwnerAvatar() {
-      return this.data.owner ? this.data.owner.avatar_url : '';
+      return this.data.owner ? this.data.owner.avatar : '';
     },
 
     getOwnerLogin() {
@@ -72,7 +72,7 @@ export default {
     },
 
     getOwnerLink() {
-      return this.data.owner ? this.data.owner.html_url : '';
+      return this.data.owner ? this.data.owner.url : '';
     },
   },
 

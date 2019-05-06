@@ -1,5 +1,5 @@
 <template lang="pug">
-  .result-body-list(:class="getListClass")
+  .result-body-list(:class="getListClass" ref="listWrapper")
     ResultHeaderItem.result-body-list__title(
       :label="label"
       :isActive="isActive"
@@ -8,6 +8,13 @@
     )
 
     .result-body-list__content
+      ResultFilter.search-content__filter(
+        v-model="currentFilter"
+        :items="items"
+        @emptyFilter="onEmptyFilter"
+        @changeFilter="onChangefilter"
+      )
+
       .result-body-list__empty(v-if="!getTotalItemsCount")
         | Couldn't find any repositories matching
 
@@ -22,6 +29,7 @@
       .result-body-list__pagination-panel
         uiPagination.result-body-list__pagination(
           :total="getTotalItemsCount"
+          :current="currentPage"
           :minPages="2"
           @changePage="onChangePage"
         )
@@ -32,6 +40,8 @@ import _paginate from '@/utils/paginate';
 
 import ResultHeaderItem from '@/components/SearchResult/ResultHeaderItem';
 import ResultBodyItem from '@/components/SearchResult/ResultBodyItem';
+import ResultFilter from '@/components/SearchResult/ResultFilter';
+
 import uiPagination from '@/ui/Pagination';
 
 export default {
@@ -40,6 +50,7 @@ export default {
   components: {
     ResultHeaderItem,
     ResultBodyItem,
+    ResultFilter,
     uiPagination,
   },
 
@@ -68,6 +79,8 @@ export default {
   data() {
     return {
       currentPage: 1,
+      currentFilter: '',
+      filteredItems: null,
     };
   },
 
@@ -80,15 +93,19 @@ export default {
     },
 
     getListUniqKey() {
-      return `${this.currentPage}_${this.query}`;
+      return `${this.currentPage}_${this.query}_${this.currentFilter}`;
+    },
+
+    getFilteredItems() {
+      return this.filteredItems || this.items;
     },
 
     getTotalItemsCount() {
-      return this.items.length;
+      return this.getFilteredItems.length;
     },
 
     getPaginationItems() {
-      const paginationData = _paginate(this.items, this.currentPage);
+      const paginationData = _paginate(this.getFilteredItems, this.currentPage);
       return paginationData.items;
     },
   },
@@ -96,10 +113,24 @@ export default {
   methods: {
     onChangePage(page = 1) {
       this.currentPage = page;
+      this.$refs.listWrapper.scrollTo(0, 0);
+      this.$emit('changePage');
     },
 
     closeTab(event) {
       this.$emit('closeTab', event);
+    },
+
+    onEmptyFilter() {
+      this.filteredItems = null;
+      this.currentFilter = '';
+      this.currentPage = 1;
+    },
+
+    onChangefilter({ items, filter }) {
+      this.filteredItems = items;
+      this.currentFilter = filter;
+      this.currentPage = 1;
     },
   },
 };
@@ -169,6 +200,10 @@ export default {
     &__pagination-panel {
       margin: 0;
       margin-top: $indent-md;
+    }
+
+    &__pagination-panel--top {
+      display: none;
     }
 
     &--history {

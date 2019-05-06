@@ -7,6 +7,7 @@ import App from '@/App.vue';
 import config from '@/config';
 
 // Plugins
+import '@/plugins/bus';
 import '@/plugins/http';
 import '@/plugins/svgicons';
 

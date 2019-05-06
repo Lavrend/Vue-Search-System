@@ -2,11 +2,11 @@
   li.result-body-item
     .result-body-item__left
       a.result-body-item__name.notranslate(@click.prevent="openModal")
-        | {{ item.full_name }}
+        | {{ item.name }}
       p.result-body-item__description
         | {{ item.description }}
       p.result-body-item__updated-at.notranslate
-        | {{ getItemDateLabel(item.pushed_at) }}
+        | {{ getItemDateLabel(item.pushedAt) }}
 
     .result-body-item__right.notranslate
       .result-body-item__lang
@@ -15,7 +15,7 @@
       .result-body-item__stars
         .result-body-item__stars-inner
           svgicon.result-body-item__stars-icon(icon="star" custom)
-          span.result-body-item__stars-label {{ getItemStarsLabel(item.stargazers_count) }}
+          span.result-body-item__stars-label {{ getItemStarsLabel(item.starsCount) }}
 </template>
 
 <script>
@@ -67,6 +67,10 @@ export default {
 
   display: flex;
   justify-content: flex-start;
+
+  &:first-child {
+    border-top: 1px solid $grey-4;
+  }
 
   &__left {
     padding-right: $indent-lg;

@@ -1,12 +1,18 @@
 <template lang="pug">
-  transition-group.result-body(:name="transitionName" tag="div")
+  transition-group.result-body(
+    :name="transitionName"
+    tag="div"
+    ref="resultBody"
+  )
     ResultBodyList.result-body__list(
       v-if="hasHistoryItem"
-      :key="`result-body-list-history-${getHistoryLength}`"
+      :key="getHistoryListKey"
       :label="historyItem.query"
       :items="historyItem.items ? historyItem.items : []"
       :isActive="hasHistoryItem"
+      :ref="`bodyList_${historyItem.id}`"
       isHistory
+      @changePage="scrollToHistory"
       @closeTab="closeTab"
     )
 
@@ -17,12 +23,19 @@
       :label="getListLabel(item)"
       :items="getListItems(item)"
       :isActive="hasActiveItem(item)"
+      :ref="`bodyList_${item.id}`"
+      @changePage="scrollToList(item.id)"
     )
 </template>
 
 <script>
 import { mapState, mapGetters } from 'vuex';
 import ResultBodyList from '@/components/SearchResult/ResultBodyList';
+
+import _animate from '@/utils/animate';
+import _delay from '@/utils/delay';
+
+const offeset = 10;
 
 export default {
   name: 'result-body',
@@ -49,6 +62,18 @@ export default {
       'getHistoryLength',
       'hasHistoryItem',
     ]),
+
+    getHistoryListKey() {
+      return `result-body-list-history-${this.getHistoryLength}_${this.historyItem.id}`;
+    },
+  },
+
+  created() {
+    this.$bus.$on('history:change', this.scrollToList);
+  },
+
+  destroyed() {
+    this.$bus.$off('history:change');
   },
 
   methods: {
@@ -66,6 +91,36 @@ export default {
 
     closeTab() {
       this.$emit('closeTab', this.historyItem);
+    },
+
+    animateScroll(to = 0) {
+      const element = this.$refs.resultBody.$el;
+
+      const draw = (time) => {
+        const newPos = (to - element.scrollTop) * time;
+
+        element.scrollTop += newPos;
+      };
+
+      _animate(draw, 300, 'easeInQuad');
+    },
+
+    async scrollToList(ref) {
+      // hack, delay after hide historyList
+      await _delay(700);
+
+      const element = this.$refs[`bodyList_${ref}`];
+      let position = 0;
+
+      if (element && element.length) {
+        position = element[0].$el.offsetTop - offeset;
+      }
+
+      this.animateScroll(position);
+    },
+
+    scrollToHistory() {
+      this.animateScroll(0);
     },
   },
 };
