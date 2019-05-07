@@ -13,6 +13,7 @@
         :items="items"
         @emptyFilter="onEmptyFilter"
         @changeFilter="onChangefilter"
+        @changeSort="onChangeSort"
       )
 
       .result-body-list__empty(v-if="!getTotalItemsCount")
@@ -37,6 +38,7 @@
 
 <script>
 import _paginate from '@/utils/paginate';
+import _sortBy from '@/utils/sortBy';
 
 import ResultHeaderItem from '@/components/SearchResult/ResultHeaderItem';
 import ResultBodyItem from '@/components/SearchResult/ResultBodyItem';
@@ -81,6 +83,9 @@ export default {
       currentPage: 1,
       currentFilter: '',
       filteredItems: null,
+
+      currentSortKey: 'shortName',
+      currentSortOrder: 'none',
     };
   },
 
@@ -93,19 +98,24 @@ export default {
     },
 
     getListUniqKey() {
-      return `${this.currentPage}_${this.query}_${this.currentFilter}`;
-    },
-
-    getFilteredItems() {
-      return this.filteredItems || this.items;
+      return `${this.currentPage}_${this.query}_${this.currentFilter}_${this.currentSortKey}_${this.currentSortOrder}`;
     },
 
     getTotalItemsCount() {
       return this.getFilteredItems.length;
     },
 
+    getFilteredItems() {
+      return this.filteredItems || this.items;
+    },
+
+    getSortedItems() {
+      if (this.currentSortKey === 'shortName' && this.currentSortOrder === 'none') return this.getFilteredItems;
+      return _sortBy(this.getFilteredItems, this.currentSortKey, this.currentSortOrder);
+    },
+
     getPaginationItems() {
-      const paginationData = _paginate(this.getFilteredItems, this.currentPage);
+      const paginationData = _paginate(this.getSortedItems, this.currentPage);
       return paginationData.items;
     },
   },
@@ -130,6 +140,12 @@ export default {
     onChangefilter({ items, filter }) {
       this.filteredItems = items;
       this.currentFilter = filter;
+      this.currentPage = 1;
+    },
+
+    onChangeSort({ key, sort }) {
+      this.currentSortKey = key;
+      this.currentSortOrder = sort;
       this.currentPage = 1;
     },
   },

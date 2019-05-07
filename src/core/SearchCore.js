@@ -8,7 +8,9 @@ class SearchCore {
   parseData(data = []) {
     const mapData = item => ({
       id: item.id,
-      name: item.full_name,
+      name: item.name,
+      fullName: item.full_name,
+      shortName: item.name.toLowerCase(),
       description: item.description,
       language: item.language,
       watchers: item.watchers,

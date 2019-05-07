@@ -2,7 +2,7 @@
   article.modal-info
     .modal-info__main
       h3.modal-info__name
-        | {{ data.name }}
+        | {{ data.fullName }}
       p.modal-info__description
         | {{ data.description }}
 
@@ -82,7 +82,7 @@ export default {
     },
 
     getItemShortLabel(count) {
-      return count > 0 ? _numeral(count).format('0[.]0a') : '';
+      return count > 0 ? _numeral(count).format('0[.]0a') : 0;
     },
 
     getLangColorStyles(lang) {
