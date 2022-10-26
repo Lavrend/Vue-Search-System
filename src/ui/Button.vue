@@ -59,14 +59,16 @@ export default {
 </script>
 
 <style lang="scss">
-.ui-button{
+.ui-button {
+  $r: &;
+
   padding: $indent-md - 2;
-  border-radius: $borderRadius / 2;
+  border-radius: calc($borderRadius / 2);
   outline: none;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  transition: background .5s ease;
+  transition: background 0.5s ease;
   cursor: pointer;
 
   display: inline-flex;
@@ -85,7 +87,7 @@ export default {
     color: $grey-6;
     fill: $grey-6;
 
-    &:not(.ui-button--disable):hover {
+    &:not(#{$r}--disable):hover {
       background: darken($white, 10%);
       border-color: darken($grey-4, 10%);
       color: darken($grey-6, 10%);
@@ -99,7 +101,7 @@ export default {
     color: $white;
     fill: $white;
 
-    &:not(.ui-button--disable):hover {
+    &:not(#{$r}--disable):hover {
       background: lighten($blue-3, 10%);
       border-color: lighten($blue-4, 10%);
     }
@@ -111,7 +113,7 @@ export default {
     color: $white;
     fill: $white;
 
-    &:not(.ui-button--disable):hover {
+    &:not(#{$r}--disable):hover {
       background: lighten($green-3, 10%);
       border-color: lighten($green-4, 10%);
     }
@@ -123,7 +125,7 @@ export default {
     color: $white;
     fill: $white;
 
-    &:not(.ui-button--disable):hover {
+    &:not(#{$r}--disable):hover {
       background: lighten($red-3, 10%);
       border-color: lighten($red-4, 10%);
     }
@@ -135,7 +137,7 @@ export default {
     color: $white;
     fill: $white;
 
-    &:not(.ui-button--disable):hover {
+    &:not(#{$r}--disable):hover {
       background: lighten($yellow-3, 10%);
       border-color: lighten($yellow-4, 10%);
     }
@@ -161,7 +163,7 @@ export default {
     opacity: 0.2;
   }
 
-  &:not(.ui-button--disable):active {
+  &:not(#{&}--disable):active {
     transform: scale(0.98);
   }
 }

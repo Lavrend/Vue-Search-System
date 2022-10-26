@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import config from '@/config';
 
 import uiInput from '@/ui/Input';
@@ -62,18 +63,26 @@ export default {
     },
   },
 
-  created() {
+  mounted() {
     this.$nextTick(() => {
       this.$refs.searchInput.$el.focus();
     });
   },
 
   methods: {
+    ...mapActions('app', [
+      'setHistoryActive',
+    ]),
+
+    ...mapActions('search', [
+      'setHistoryData',
+    ]),
+
     async onSubmit() {
       if (this.hasFormLocked) return;
       this.isLoading = true;
 
-      await this.$store.dispatch('search/setHistoryData', {
+      await this.setHistoryData({
         query: this.currentInputValue,
       }).finally(() => {
         this.isLoading = false;
@@ -81,7 +90,7 @@ export default {
         this.$refs.searchInput.$el.blur();
       });
 
-      this.$store.dispatch('app/setHistoryActive', false);
+      this.setHistoryActive(false);
     },
   },
 };

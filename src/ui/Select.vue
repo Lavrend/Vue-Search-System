@@ -24,8 +24,8 @@ export default {
   },
 
   methods: {
-    onChange(e) {
-      const index = e.target.value;
+    onChange(event) {
+      const index = event.target.value;
 
       this.$emit('change', this.options[index]);
     },

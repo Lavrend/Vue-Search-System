@@ -85,18 +85,18 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-  }
 
-  &__menu-item:last-child {
-    margin-right: 0;
-  }
+    &.router-link-exact-active {
+      opacity: 1;
+    }
 
-  &__menu-item:hover {
-    opacity: 1;
-  }
+    &:last-child {
+      margin-right: 0;
+    }
 
-  &__menu-item.router-link-exact-active {
-    opacity: 1;
+    &:hover {
+      opacity: 1;
+    }
   }
 
   @media screen and (max-width: 980px) {

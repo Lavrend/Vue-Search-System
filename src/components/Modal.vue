@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import uiButton from '@/ui/Button';
 
 export default {
@@ -39,9 +39,9 @@ export default {
   },
 
   methods: {
-    closeModal() {
-      this.$store.dispatch('app/closeModal');
-    },
+    ...mapActions('app', [
+      'closeModal',
+    ]),
   },
 };
 </script>

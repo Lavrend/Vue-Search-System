@@ -72,7 +72,7 @@ export default {
     this.$bus.$on('history:change', this.scrollToList);
   },
 
-  destroyed() {
+  beforeDestroy() {
     this.$bus.$off('history:change');
   },
 
@@ -82,7 +82,7 @@ export default {
     },
 
     getListItems(item) {
-      return item.items ? item.items : [];
+      return item.items || [];
     },
 
     hasActiveItem(item) {

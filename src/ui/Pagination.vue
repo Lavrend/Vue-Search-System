@@ -86,10 +86,12 @@ export default {
     },
   },
 
-  data: () => ({
-    currentPage: 1,
-    currentPageSize: config.DEFAULT_PAGE_SIZE,
-  }),
+  data() {
+    return {
+      currentPage: 1,
+      currentPageSize: config.DEFAULT_PAGE_SIZE,
+    };
+  },
 
   computed: {
     getItemPrevClass() {
@@ -154,25 +156,34 @@ export default {
   },
 
   created() {
-    this.currentPage = this.current > 0 ? this.current : 1;
-    this.currentPageSize = this.pageSize;
+    this.init();
+  },
 
-    this.$watch('totalPages', () => {
-      if (this.totalPages && this.currentPage > this.totalPages) {
-        this.currentPage = this.totalPages;
-      }
-    }, { immediate: true });
+  watch: {
+    pageSize(pageSize) {
+      this.currentPageSize = pageSize;
+    },
 
-    this.$watch('pageSize', (value) => {
-      this.currentPageSize = value;
-    });
+    current(page) {
+      this.currentPage = page;
+    },
 
-    this.$watch('current', (value) => {
-      this.currentPage = value;
-    });
+    totalPages: {
+      handler() {
+        if (this.totalPages && this.currentPage > this.totalPages) {
+          this.currentPage = this.totalPages;
+        }
+      },
+      immediate: true,
+    },
   },
 
   methods: {
+    init() {
+      this.currentPage = this.current > 0 ? this.current : 1;
+      this.currentPageSize = this.pageSize;
+    },
+
     getItemCurrentClass(page) {
       return {
         'ui-pagination__item--current': this.currentPage === page,
@@ -249,40 +260,40 @@ export default {
     &:last-child {
       margin-right: 0;
     }
+
+    &--prev {
+      margin-left: 0;
+      margin-right: $indent-xs;
+      padding: 0;
+    }
+
+    &--next {
+      margin-right: 0;
+      margin-left: $indent-xs;
+      padding: 0;
+    }
+
+    &--current {
+      color: $blue-5;
+      border-color: $blue-5;
+      cursor: default;
+    }
+
+    &--locked {
+      border-color: $grey-3;
+      background: $grey-1;
+      color: $grey-4;
+      cursor: not-allowed;
+    }
+
+    &:not(#{&}--current):not(#{&}--locked):hover {
+      border-color: darken($grey-2, 25%);
+      color: darken($grey-6, 25%);
+    }
   }
 
   &__item-inner {
     padding: $indent-sm;
-  }
-
-  &__item--prev {
-    margin-left: 0;
-    margin-right: $indent-xs;
-    padding: 0;
-  }
-
-  &__item--next {
-    margin-right: 0;
-    margin-left: $indent-xs;
-    padding: 0;
-  }
-
-  &__item--current {
-    color: $blue-5;
-    border-color: $blue-5;
-    cursor: default;
-  }
-
-  &__item--locked {
-    border-color: $grey-3;
-    background: $grey-1;
-    color: $grey-4;
-    cursor: not-allowed;
-  }
-
-  &__item:not(.ui-pagination__item--current):not(.ui-pagination__item--locked):hover {
-    border-color: darken($grey-2, 25%);
-    color: darken($grey-6, 25%);
   }
 }
 </style>

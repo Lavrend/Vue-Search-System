@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex';
+import { mapState, mapGetters, mapActions } from 'vuex';
 
 import ResultHeader from '@/components/SearchResult/ResultHeader';
 import ResultBody from '@/components/SearchResult/ResultBody';
@@ -33,14 +33,21 @@ export default {
   },
 
   methods: {
+    ...mapActions('search', [
+      'setTransitionName',
+      'clearHistoryItem',
+      'setCurrentItem',
+      'closeActiveHistory',
+    ]),
+
     changeTab(item) {
-      this.$store.dispatch('search/setTransitionName', item);
-      this.$store.dispatch('search/clearHistoryItem');
-      this.$store.dispatch('search/setCurrentItem', item.id);
+      this.setTransitionName(item);
+      this.clearHistoryItem();
+      this.setCurrentItem(item.id);
     },
 
     closeTab(item) {
-      this.$store.dispatch('search/closeActiveHistory', item);
+      this.closeActiveHistory(item);
     },
   },
 };

@@ -1,7 +1,7 @@
 <template lang="pug">
   li.result-body-item
     .result-body-item__left
-      a.result-body-item__name.notranslate(@click.prevent="openModal")
+      a.result-body-item__name.notranslate(@click.prevent="modalShow")
         | {{ item.name }}
       p.result-body-item__description
         | {{ item.description }}
@@ -19,9 +19,11 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+import numeral from 'numeral';
+
 import langsColors from '@/config/langsColors';
-import _numeral from 'numeral';
-import _dateFormat from '@/utils/date-format';
+import dateFormat from '@/utils/date-format';
 
 export default {
   name: 'result-body-item',
@@ -29,17 +31,21 @@ export default {
   props: {
     item: {
       type: Object,
-      default: () => {},
+      default: () => ({}),
     },
   },
 
   methods: {
+    ...mapActions('app', [
+      'openModal',
+    ]),
+
     getItemDateLabel(value) {
-      return `Updated ${_dateFormat.getDateLabel(value)}`;
+      return `Updated ${dateFormat.getDateLabel(value)}`;
     },
 
     getItemStarsLabel(count) {
-      return count > 0 ? _numeral(count).format('0[.]0a') : 0;
+      return count > 0 ? numeral(count).format('0[.]0a') : 0;
     },
 
     getLangColorStyles(lang) {
@@ -48,8 +54,8 @@ export default {
       };
     },
 
-    openModal() {
-      this.$store.dispatch('app/openModal', {
+    modalShow() {
+      this.openModal({
         name: 'ModalInfo',
         data: this.item,
       });

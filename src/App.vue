@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 
 // Layouts
 import LayoutHome from '@/layouts/Home';
@@ -34,18 +34,22 @@ export default {
     getLayout() {
       const metaLayout = this.$route.meta.layout;
 
-      if (metaLayout === 'home') {
-        return 'LayoutHome';
-      }
-
-      return 'LayoutDefault';
+      return metaLayout === 'home'
+        ? 'LayoutHome'
+        : 'LayoutDefault';
     },
   },
 
-  created() {
+  mounted() {
     this.$nextTick(() => {
-      this.$store.dispatch('app/setPageReady', true);
+      this.setPageReady(true);
     });
+  },
+
+  methods: {
+    ...mapActions('app', [
+      'setPageReady',
+    ]),
   },
 };
 </script>

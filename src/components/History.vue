@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex';
+import { mapState, mapGetters, mapActions } from 'vuex';
 import config from '@/config';
 
 import _numeral from 'numeral';
@@ -51,6 +51,11 @@ export default {
   },
 
   methods: {
+    ...mapActions('search', [
+      'setTransitionName',
+      'setActiveHistory',
+    ]),
+
     getItemClass(item) {
       return {
         'history-sidebar__item--active': this.currentItem === item.id,
@@ -68,8 +73,8 @@ export default {
     activeHistory(item) {
       if (this.currentItem === item.id) return;
 
-      this.$store.dispatch('search/setTransitionName', item);
-      this.$store.dispatch('search/setActiveHistory', item);
+      this.setTransitionName(item);
+      this.setActiveHistory(item);
     },
   },
 };
@@ -135,12 +140,12 @@ export default {
       transform: translateX($indent-md);
       color: $blue-6;
     }
-  }
 
-  &__item--active {
-    transform: translateX($indent-md);
-    color: $blue-6;
-    cursor: default;
+    &--active {
+      transform: translateX($indent-md);
+      color: $blue-6;
+      cursor: default;
+    }
   }
 
   &__item-label {

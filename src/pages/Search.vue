@@ -97,7 +97,7 @@ $pageSearchHeaderHeight: $height-header;
     font-weight: bold;
     font-size: 15px;
     border: 1px solid $grey-4;
-    border-radius: $borderRadius / 2;
+    border-radius: calc($borderRadius / 2);
     color: $blue-5;
     fill: $blue-5;
     opacity: 0.6;

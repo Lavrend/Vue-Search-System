@@ -120,7 +120,7 @@ export default {
     padding: $indent-md;
     margin: 0 $indent-md;
     border: 2px solid $white;
-    border-radius: $borderRadius / 2;
+    border-radius: calc($borderRadius / 2);
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
